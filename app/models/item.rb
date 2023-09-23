@@ -1,16 +1,26 @@
 class Item < ApplicationRecord
   has_one_attached :item_image
-  extend ActiveHash::Associations::ActiveRecordExtensions
-
-  belongs_to :category, class_name: 'Category', foreign_key: 'category_id'
-  belongs_to :item_situation, class_name: 'ItemSituation', foreign_key: 'item_situation_id'
-  belongs_to :delivery_charge, class_name: 'DeliveryCharge', foreign_key: 'delivery_charge_id'
-  belongs_to :delivery_area, class_name: 'DeliveryArea', foreign_key: 'delivery_area_id'
-  belongs_to :delivery_day, class_name: 'DeliveryDay', foreign_key: 'delivery_day_id'
   belongs_to :user
-  has_one_attached :image
 
   validates :item_name, presence: true
   validates :item_explanation, presence: true
-  validates :price, presence: true, numericality: { greater_than_or_equal_to: 0 }
+  validates :item_image, presence: true
+
+  with_options presence: true, numericality: {other_than: 1, message: "can't be blank"} do
+    validates :category_id
+    validates :item_situation_id
+    validates :delivery_charge_id
+    validates :delivery_area_id
+    validates :delivery_day_id
+  end
+
+    validates :price, presence: true, numericality: {greater_than_or_equal_to: 300,less_than_or_equal_to: 9_999_999,only_integer: true}
+
+  extend ActiveHash::Associations::ActiveRecordExtensions
+
+  belongs_to :category
+  belongs_to :item_situation
+  belongs_to :delivery_charge
+  belongs_to :delivery_area
+  belongs_to :delivery_day
 end

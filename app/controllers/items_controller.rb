@@ -7,23 +7,36 @@ class ItemsController < ApplicationController
   end
 
   def create
-    @item = current_user.items.build(item_params)
-    @item.item_image.attach(params[:item][:item_image]) if params[:item][:item_image]
-  
+    @item = Item.new(item_params)
     if @item.save
-      redirect_to @item, notice: 'アイテムが正常に保存されました。'
+      redirect_to root_path
     else
-      flash.now[:alert] = 'アイテムの保存に失敗しました。'
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
   private
 
   def item_params
-    params.require(:item).permit(:item_name, :item_explanation, :category_id, :item_situation_id, :delivery_charge_id, :delivery_area_id, :delivery_day_id, :price, :item_image)
+    params.require(:item).permit(
+      :item_name,
+      :item_explanation,
+      :price,
+      :category_id,
+      :item_situation_id,
+      :delivery_charge_id,
+      :delivery_area_id,
+      :delivery_day_id,
+      :item_image
+    ).merge(user_id: current_user.id)
   end
 end
+
+
+
+
+
+
 
 
 
