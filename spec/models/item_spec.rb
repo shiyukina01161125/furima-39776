@@ -5,7 +5,7 @@ RSpec.describe Item, type: :model do
     before do
       @item = FactoryBot.build(:item)
     end
-    
+
     context '商品出品ができるとき' do
       it '必要な情報が全て存在すれば登録できる' do
         expect(@item).to be_valid
@@ -44,7 +44,7 @@ RSpec.describe Item, type: :model do
       end
 
       it '発送元の地域が空では登録できない' do
-        @item.delivery_area_id  = ''
+        @item.delivery_area_id = ''
         @item.valid?
         expect(@item.errors.full_messages).to include("Delivery area can't be blank")
       end

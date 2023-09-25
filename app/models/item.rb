@@ -6,7 +6,7 @@ class Item < ApplicationRecord
   validates :item_explanation, presence: true
   validates :item_image, presence: true
 
-  with_options presence: true, numericality: {other_than: 1, message: "can't be blank"} do
+  with_options presence: true, numericality: { other_than: 1, message: "can't be blank" } do
     validates :category_id
     validates :item_situation_id
     validates :delivery_charge_id
@@ -14,7 +14,8 @@ class Item < ApplicationRecord
     validates :delivery_day_id
   end
 
-    validates :price, presence: true, numericality: {greater_than_or_equal_to: 300,less_than_or_equal_to: 9_999_999,only_integer: true}
+  validates :price, presence: true,
+                    numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999, only_integer: true }
 
   extend ActiveHash::Associations::ActiveRecordExtensions
 
