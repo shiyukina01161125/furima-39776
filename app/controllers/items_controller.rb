@@ -1,7 +1,8 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create]
+  before_action :authenticate_user!, only: [:new, :create, :show ]
 
   def index
+    @items = Item.all.order(created_at: :desc)
   end
 
   def new
@@ -13,9 +14,14 @@ class ItemsController < ApplicationController
     if @item.save
       redirect_to root_path
     else
+      @items = @items.messages.includes(:user)
       render :new, status: :unprocessable_entity
     end
   end
+
+  def show
+  end
+
 
   private
 
