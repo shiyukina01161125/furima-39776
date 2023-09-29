@@ -14,13 +14,14 @@ class ItemsController < ApplicationController
     if @item.save
       redirect_to root_path
     else
-      @items = @items.messages.includes(:user)
       render :new, status: :unprocessable_entity
     end
   end
 
-  def show
-  end
+  #def show
+    #@item = Item.new
+    #@items = @items.messages.includes(:user)
+  #end
 
 
   private
