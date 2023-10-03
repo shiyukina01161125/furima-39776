@@ -10,7 +10,7 @@ class OrderForm
     validates :municipality
     validates :street_address
     validates :telephone_number, numericality: { only_integer: true, message: "is invalid."},length: { minimum: 10, maximum: 11 }
-    validates :token, presence: true
+    validates :token
   end
   
   def save(params,user_id)

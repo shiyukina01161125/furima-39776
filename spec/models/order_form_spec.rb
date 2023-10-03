@@ -8,6 +8,7 @@ RSpec.describe OrderForm, type: :model do
       user = FactoryBot.create(:user)
       @order_form = FactoryBot.build(:order_form, user_id: user.id, item_id: item.id)
     end
+    sleep 3
 
     context '商品購入ができるとき' do
       it '必要な情報が全て存在すれば登録できる' do
@@ -75,6 +76,16 @@ RSpec.describe OrderForm, type: :model do
         @order_form.token = ''
         @order_form.valid?
         expect(@order_form.errors.full_messages).to include("Token can't be blank")
+      end
+      it 'userが空だと登録できない' do
+        @order_form.user_id = nil
+        @order_form.valid?
+        expect(@order_form.errors.full_messages).to include("User can't be blank")
+      end
+      it 'itemが空だと登録できない' do
+        @order_form.item_id = nil
+        @order_form.valid?
+        expect(@order_form.errors.full_messages).to include("Item can't be blank")
       end
     end
   end
